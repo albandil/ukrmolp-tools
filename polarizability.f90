@@ -71,7 +71,7 @@ program polarizability
                 if (props(i)%energies(j) == props(i)%energies(1)) then
                     Emat(j, :) = 0
                 else
-                    Emat(j, :) = mat(:, j) / (props(i)%energies(j) - props(i)%energies(1))
+                    Emat(j, :) = mat(:, j) / (props(i)%energies(j) - props(i)%energies(1) - omega)
                 end if
             end do
             alpha = alpha + matmul(mat, Emat)
