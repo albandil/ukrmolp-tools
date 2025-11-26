@@ -237,7 +237,7 @@ if [ ! -f $INSTDIR/lib/libscalapack.so ]
 then
     $CURL -Ls https://github.com/Reference-ScaLAPACK/scalapack/archive/refs/tags/v$scalapack_version.tar.gz | tar xz || exit 1
     # use larger block size suitable for modern CPUs with large caches
-    sed -i 's/PILAENV = 32/PILAENV = 128/g' $scalapack_pkg/PBLAS/SRC/pilaenv.f
+    sed -i 's/PILAENV = 32/PILAENV = 128/g' $scalapack_version/PBLAS/SRC/pilaenv.f
     mkdir -p scalapack-$scalapack_version/build
     pushd scalapack-$scalapack_version/build
     CMAKE_POLICY_VERSION_MINIMUM=3.5 cmake \
