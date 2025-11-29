@@ -698,7 +698,17 @@ following commands (for double or quadruple precision):
 
 All the programs will be then accessible from the shell. Note that
 the standard system programs (e.g. Python-based) may encounter incompatibility
-issues when executed from that shell environment." > $INSTDIR/README.txt
+issues when executed from that shell environment.
+
+The software is built for the x86-64-v3 (AVX2) instruction set. If you
+encounter SIGILL failures, your CPU is way too old. Additionally, the package
+requires a certain minimal version of GLIBC, but if you use a reasonable
+recent system, you are safe.
+
+If you ever decide to move the installation to a different path,
+or simply rename the directory, you will also need to update the paths in
+etc/openmpi-mca-params.conf and etc/pmix-mca-params.conf. Otherwise Open MPI
+will fail to find its components." > $INSTDIR/README.txt
 
 for prec in double quad
 do
