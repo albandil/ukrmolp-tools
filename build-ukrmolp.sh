@@ -602,8 +602,9 @@ git submodule update --init
 popd
 
 declare -A flags
-flags[double]="-fdefault-integer-8 -march=$ARCH -Dusemapping"
-flags[quad]="-fdefault-integer-8 -march=$ARCH -Dusequadprec"
+common_flags="-fdefault-integer-8 -march=$ARCH -fno-signed-zeros -fno-trapping-math -fassociative-math -fstack-arrays"
+flags[double]="$common_flags -fexternal-blas -Dusemapping"
+flags[quad]="$common_flags -Dusequadprec"
 
 for prec in double quad
 do
