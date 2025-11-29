@@ -616,7 +616,7 @@ do
             -D CMAKE_BUILD_TYPE=Release \
             -D CMAKE_Fortran_FLAGS="${flags[$prec]}" \
             -D CMAKE_INSTALL_BINDIR=bin.$prec \
-            -D CMAKE_INSTALL_INCLUDEDIR=include/UKRmol+ \
+            -D CMAKE_INSTALL_INCLUDEDIR=include/ukrmolp.$prec \
             -D CMAKE_INSTALL_LIBDIR=lib.$prec \
             -D CMAKE_INSTALL_PREFIX=$INSTDIR \
             -D CMAKE_INSTALL_RPATH="\$ORIGIN/../lib.$prec:\$ORIGIN/../lib" \
