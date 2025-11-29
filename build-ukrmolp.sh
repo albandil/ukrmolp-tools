@@ -703,7 +703,9 @@ issues when executed from that shell environment.
 The software is built for the x86-64-v3 (AVX2) instruction set. If you
 encounter SIGILL failures, your CPU is way too old. Additionally, the package
 requires a certain minimal version of GLIBC, but if you use a reasonable
-recent system, you are safe.
+recent system, you are safe. The version of ScaLAPACK used in this
+distribution uses 4-byte integers only. Running large calculations in MPI-SCATCI
+is likely to fail.
 
 If you ever decide to move the installation to a different path,
 or simply rename the directory, you will also need to update the paths in
