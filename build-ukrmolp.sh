@@ -93,7 +93,7 @@ then
     pushd gcc-$gcc_version
     $CURL -Ls https://gmplib.org/download/gmp/gmp-$gmp_version.tar.xz | tar xJ || exit 1
     rm -rf gmp && mv gmp-$gmp_version gmp
-    $CURL -Ls https://www.mpfr.org/mpfr-current/mpfr-$mpfr_version.tar.xz | tar xJ || exit 1
+    $CURL -Ls https://www.mpfr.org/mpfr-$mpfr_version/mpfr-$mpfr_version.tar.xz | tar xJ || exit 1
     rm -rf mpfr && mv mpfr-$mpfr_version mpfr
     $CURL -Ls https://ftp.gnu.org/gnu/mpc/mpc-$mpc_version.tar.gz | tar xz || exit 1
     rm -rf mpc && mv mpc-$mpc_version mpc
