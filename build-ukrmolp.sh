@@ -526,7 +526,10 @@ then
         -D ENABLE_ecpint=ON \
         .. || exit 1
     # Psi4 cannot find Eigen3 (unlike libint2), we have to use CPLUS_INCLUDE_PATH
-    CPLUS_INCLUDE_PATH=$INSTDIR/include cmake --build . -- -j $NPROC || exit 1
+    # Also, due to nesting, -j$NPROC is not enough to restrict threads -> use env var
+    CPLUS_INCLUDE_PATH=$INSTDIR/include \
+    CMAKE_BUILD_PARALLEL_LEVEL=$NPROC \
+        cmake --build . || exit 1
     cmake --install . || exit 1
     # Psi4 hardcodes the interpreter path, we have to generalize it for relocatability
     sed -i "s;#!$INSTDIR/bin/python$python_ver;#!/usr/bin/env python$python_ver;g" $INSTDIR/bin/psi4
@@ -565,7 +568,7 @@ then
         -D CMAKE_INSTALL_PREFIX=$INSTDIR \
         -D CMAKE_INSTALL_LIBDIR=lib \
         .. || exit 1
-    cmake --build . -- -j $PROC || exit 1
+    cmake --build . -- -j $NPROC || exit 1
     cmake --install . || exit 1
     popd
 fi
