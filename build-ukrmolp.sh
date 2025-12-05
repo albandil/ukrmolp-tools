@@ -224,8 +224,8 @@ if [ ! -f $INSTDIR/lib/libopenblas.so ]
 then
     $CURL -Ls https://github.com/OpenMathLib/OpenBLAS/releases/download/v$openblas_version/OpenBLAS-$openblas_version.tar.gz | tar xz || exit 1
     pushd OpenBLAS-$openblas_version
-    make PREFIX=$INSTDIR DYNAMIC_ARCH=1 USE_THREAD=1 USE_OPENMP=1 NUM_THREADS=128 NO_STATIC=1 || exit 1
-    make PREFIX=$INSTDIR DYNAMIC_ARCH=1 USE_THREAD=1 USE_OPENMP=1 NUM_THREADS=128 NO_STATIC=1 install || exit 1
+    make PREFIX=$INSTDIR DYNAMIC_ARCH=1 USE_THREAD=1 USE_OPENMP=1 NUM_THREADS=128 NO_STATIC=1 MAKE_NB_JOBS=$NPROC || exit 1
+    make PREFIX=$INSTDIR DYNAMIC_ARCH=1 USE_THREAD=1 USE_OPENMP=1 NUM_THREADS=128 NO_STATIC=1 MAKE_NB_JOBS=$NPROC install || exit 1
     popd
 fi
 
@@ -253,7 +253,7 @@ then
         -D MPI_ROOT=$INSTDIR \
         -D BUILD_SHARED_LIBS=ON \
         .. || exit 1
-    cmake --build . || exit 1
+    cmake --build . -- -j $NPROC || exit 1
     cmake --install . || exit 1
     popd
 fi
@@ -300,7 +300,7 @@ then
         -D LAPACK_LIBRARIES=$INSTDIR/lib/libopenblas.so \
         -D BUILD_SHARED_LIBS=ON \
         .. || exit 1
-    cmake --build . || exit 1
+    cmake --build . -- -j $NPROC || exit 1
     cmake --install . || exit 1
     popd
 fi
@@ -431,7 +431,7 @@ then
         -D EIGEN_BUILD_BLAS=OFF \
         -D EIGEN_BUILD_LAPACK=OFF \
         .. || exit 1
-    cmake --build . || exit 1
+    cmake --build . -- -j $NPROC || exit 1
     cmake --install . || exit 1
     popd
 fi
@@ -478,7 +478,7 @@ then
         -D CMAKE_INSTALL_PREFIX=$INSTDIR \
         -D CMAKE_INSTALL_LIBDIR=lib \
         .. || exit 1
-    cmake --build . || exit 1
+    cmake --build . -- -j $NPROC || exit 1
     cmake --install . || exit 1
     popd
 fi
@@ -526,7 +526,7 @@ then
         -D ENABLE_ecpint=ON \
         .. || exit 1
     # Psi4 cannot find Eigen3 (unlike libint2), we have to use CPLUS_INCLUDE_PATH
-    CPLUS_INCLUDE_PATH=$INSTDIR/include cmake --build . || exit 1
+    CPLUS_INCLUDE_PATH=$INSTDIR/include cmake --build . -- -j $NPROC || exit 1
     cmake --install . || exit 1
     # Psi4 hardcodes the interpreter path, we have to generalize it for relocatability
     sed -i "s;#!$INSTDIR/bin/python$python_ver;#!/usr/bin/env python$python_ver;g" $INSTDIR/bin/psi4
@@ -546,7 +546,7 @@ then
         -G Ninja \
         -D CMAKE_INSTALL_PREFIX=$INSTDIR \
         .. || exit 1
-    cmake --build . || exit 1
+    cmake --build . -- -j $NPROC || exit 1
     cmake --install . || exit 1
     popd
 fi
@@ -565,7 +565,7 @@ then
         -D CMAKE_INSTALL_PREFIX=$INSTDIR \
         -D CMAKE_INSTALL_LIBDIR=lib \
         .. || exit 1
-    cmake --build . || exit 1
+    cmake --build . -- -j $PROC || exit 1
     cmake --install . || exit 1
     popd
 fi
@@ -586,7 +586,7 @@ then
         -D CMAKE_INSTALL_LIBDIR=lib \
         -D TUNERS=OFF \
         .. || exit 1
-    cmake --build . || exit 1
+    cmake --build . -- -j $NPROC || exit 1
     cmake --install . || exit 1
     popd
 fi
@@ -639,7 +639,7 @@ do
             -D CLBLAST_LIBRARIES=$INSTDIR/lib/libclblast.so \
             -D UKRMOL_OUT_DIR="../ukrmol-out-git" \
             .. || exit 1
-        cmake --build . || exit 1
+        cmake --build . -- -j $NPROC || exit 1
         cmake --install . || exit 1
         popd
     fi
