@@ -523,6 +523,7 @@ then
         -D pybind11_DIR=$INSTDIR \
         -D Eigen3_DIR=$INSTDIR \
         -D ENABLE_XHOST=OFF \
+        -D ENABLE_ecpint=ON \
         .. || exit 1
     # Psi4 cannot find Eigen3 (unlike libint2), we have to use CPLUS_INCLUDE_PATH
     CPLUS_INCLUDE_PATH=$INSTDIR/include cmake --build . || exit 1
