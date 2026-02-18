@@ -37,6 +37,7 @@ eigen_version=3.4.1
 elpa_version=2025.06.002
 gcc_version=15.2.0
 gmp_version=6.3.0
+gsl_version=2.8
 hwloc_version=2.12.2
 libevent_version=2.1.12
 libffi_version=3.5.2
@@ -594,7 +595,28 @@ then
     popd
 fi
 
-# 24. UKRmol+
+# 24. GSL
+# -------
+# GNU Scientific Library (used in UKRmol+ for special functions)
+
+if [ ! -f $INSTDIR/lib/libgsl.so ]
+then
+    $CURL -Ls https://ftp.gnu.org/gnu/gsl/gsl-2.8.tar.gz | tar xz || exit 1
+    mkdir -p gsl-2.8/build
+    pushd gsl-2.8/build
+    ../configure \
+        --prefix=$INSTDIR \
+        --libdir=$INSTDIR/lib \
+        --enable-shared \
+        --disable-static \
+        CFLAGS="-O2 -march=$ARCH" \
+        || exit 1
+    make -j $NPROC || exit 1
+    make install || exit 1
+    popd
+fi
+
+# 25. UKRmol+
 # -----------
 # Molecular R-matrix codes
 
@@ -629,6 +651,7 @@ do
             -D BUILD_DOC=ON \
             -D BUILD_SHARED_LIBS=ON \
             -D WITH_CLBLAST=ON \
+            -D WITH_GSL=ON \
             -D MPI_ROOT=$INSTDIR \
             -D ARPACK_LIBRARIES=$INSTDIR/lib/libarpack.so \
             -D BLAS_LIBRARIES=$INSTDIR/lib/libopenblas.so \
@@ -657,7 +680,7 @@ then
     popd
 fi
 
-# 25. Finalize
+# 26. Finalize
 # ------------
 # Optimize binaries and add default library search paths
 
@@ -675,7 +698,7 @@ do
     patchelf --set-rpath $RELPATH $FILEPATH
 done
 
-# 26. Pack
+# 27. Pack
 # --------
 # Write a README and an env-script, and build the shell installer
 
@@ -684,7 +707,7 @@ echo "UKRmol+ Linux portable distribution
 
 This software package provides the following:
 
-  - UKRmol+ (full-featured: MPI, Arpack, SLEPc, ScaLAPACK, ELPA, CLBlast)
+  - UKRmol+ (full-featured: MPI, Arpack, SLEPc, ScaLAPACK, ELPA, GSL, CLBlast)
   - Open MPI (basic components only, no InfiniBand or PBS support etc)
   - Python 3 (standard library and NumPy)
   - Psi4 (default configuration)
