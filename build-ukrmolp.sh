@@ -601,9 +601,9 @@ fi
 
 if [ ! -f $INSTDIR/lib/libgsl.so ]
 then
-    $CURL -Ls https://ftp.gnu.org/gnu/gsl/gsl-2.8.tar.gz | tar xz || exit 1
-    mkdir -p gsl-2.8/build
-    pushd gsl-2.8/build
+    $CURL -Ls https://ftp.gnu.org/gnu/gsl/gsl-$gsl_version.tar.gz | tar xz || exit 1
+    mkdir -p gsl-$gsl_version/build
+    pushd gsl-$gsl_version/build
     ../configure \
         --prefix=$INSTDIR \
         --libdir=$INSTDIR/lib \
