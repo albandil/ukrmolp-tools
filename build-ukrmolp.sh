@@ -710,7 +710,7 @@ This software package provides the following:
   - UKRmol+ (full-featured: MPI, Arpack, SLEPc, ScaLAPACK, ELPA, GSL, CLBlast)
   - Open MPI (basic components only, no InfiniBand or PBS support etc)
   - Python 3 (standard library and NumPy)
-  - Psi4 (default configuration)
+  - Psi4 (ECP enabled)
 
 UKRmol+ components have the versions:
 
