@@ -31,11 +31,11 @@ CURL="env -i curl"                  # avoid this environment when downloading
 
 # full package versions
 arpack_version=3.9.1
-cmake_version=4.2.0
+cmake_version=4.3.4
 cython_version=3.2.0
 eigen_version=3.4.1
 elpa_version=2026.02.001
-gcc_version=15.2.0
+gcc_version=16.1.0
 gmp_version=6.3.0
 gsl_version=2.8
 hwloc_version=2.12.2
@@ -51,7 +51,7 @@ openmpi_version=5.0.10
 openssl_version=3.5.4
 patchelf_version=0.15.5
 petsc_version=3.24.1
-psi4_version=1.10
+psi4_version=1.11
 pybind11_version=2.13.6
 python_version=3.13.9
 scalapack_version=2.2.2
