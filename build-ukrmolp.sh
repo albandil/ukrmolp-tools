@@ -194,9 +194,12 @@ fi
 
 if [ ! -f $INSTDIR/lib/libmpi.so ]
 then
-    $CURL -Ls https://download.open-mpi.org/release/open-mpi/v$openmpi_ver/openmpi-$openmpi_version.tar.gz | tar xz || exit 1
-    mkdir -p openmpi-$openmpi_version/build
-    pushd openmpi-$openmpi_version/build
+    #$CURL -Ls https://download.open-mpi.org/release/open-mpi/v$openmpi_ver/openmpi-$openmpi_version.tar.gz | tar xz || exit 1
+    $CURL -Ls https://download.open-mpi.org/nightly/open-mpi/v5.0.x/openmpi-v5.0.x-202606300347-9d4d35b.tar.gz | tar xz || exit 1
+    #mkdir -p openmpi-$openmpi_version/build
+    #pushd openmpi-$openmpi_version/build
+    mkdir -p openmpi-v5.0.x-202606300347-9d4d35b/build
+    pushd openmpi-v5.0.x-202606300347-9d4d35b/build
     ../configure \
         --prefix=$INSTDIR \
         --libdir='${exec_prefix}/lib' \
@@ -628,7 +631,7 @@ git submodule update --init
 popd
 
 declare -A flags
-common_flags="-fdefault-integer-8 -march=$ARCH -fno-signed-zeros -fno-trapping-math -fassociative-math -fstack-arrays"
+common_flags="-march=$ARCH -fno-signed-zeros -fno-trapping-math -fassociative-math -fstack-arrays"
 flags[double]="$common_flags -fexternal-blas -Dusemapping"
 flags[quad]="$common_flags -Dusequadprec"
 
