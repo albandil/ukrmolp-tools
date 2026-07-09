@@ -57,7 +57,7 @@ python_version=3.13.9
 scalapack_version=2.2.2
 setuptools_version=80.9.0
 slepc_version=3.24.1
-zlib_version=1.3.1
+zlib_version=1.3.2
 
 # short package versions
 hwloc_ver=$(echo $hwloc_version | cut -f1-2 -d.)
