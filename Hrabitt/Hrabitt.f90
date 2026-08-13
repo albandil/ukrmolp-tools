@@ -30,7 +30,7 @@ program Hrabitt
 
     ! angular integrals
     real(wp), parameter :: int_Y00_n_Y10 = 1/sqrt(3._wp)
-    real(wp), parameter :: int_Y20_n_Y10 = sqrt(2._wp/15)
+    real(wp), parameter :: int_Y20_n_Y10 = 2/sqrt(15._wp)
 
     ! spherical harmonics in z direction
     real(wp), parameter :: Y00z = sqrt(1/(4*pi))
