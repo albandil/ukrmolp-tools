@@ -194,12 +194,9 @@ fi
 
 if [ ! -f $INSTDIR/lib/libmpi.so ]
 then
-    #$CURL -Ls https://download.open-mpi.org/release/open-mpi/v$openmpi_ver/openmpi-$openmpi_version.tar.gz | tar xz || exit 1
-    $CURL -Ls https://download.open-mpi.org/nightly/open-mpi/v5.0.x/openmpi-v5.0.x-202606300347-9d4d35b.tar.gz | tar xz || exit 1
-    #mkdir -p openmpi-$openmpi_version/build
-    #pushd openmpi-$openmpi_version/build
-    mkdir -p openmpi-v5.0.x-202606300347-9d4d35b/build
-    pushd openmpi-v5.0.x-202606300347-9d4d35b/build
+    $CURL -Ls https://download.open-mpi.org/release/open-mpi/v$openmpi_ver/openmpi-$openmpi_version.tar.gz | tar xz || exit 1
+    mkdir -p openmpi-$openmpi_version/build
+    pushd openmpi-$openmpi_version/build
     ../configure \
         --prefix=$INSTDIR \
         --libdir='${exec_prefix}/lib' \
