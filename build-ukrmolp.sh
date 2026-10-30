@@ -493,7 +493,16 @@ then
     pip3 install pydantic || exit 1
 fi
 
-# 19. Pint
+# 19. Pydantic settings
+# ------------
+# Settings management using Pydantic (a run-time dependency of Psi4)
+
+if [ ! -d $INSTDIR/lib/python$python_ver/site-packages/pydantic_settings ]
+then
+    pip3 install pydantic-settings || exit 1
+fi
+
+# 20. Pint
 # --------
 # Dimensioned number library (a run-time dependency of Psi4)
 
@@ -502,7 +511,7 @@ then
     pip3 install pint || exit 1
 fi
 
-# 20. Psi4
+# 21. Psi4
 # --------
 # Quantum chemistry software
 
@@ -537,7 +546,7 @@ then
     popd
 fi
 
-# 21. OpenCL headers
+# 22. OpenCL headers
 # ------------------
 # Headers for the OpenCL C API
 
@@ -555,7 +564,7 @@ then
     popd
 fi
 
-# 22. OpenCL ICD
+# 23. OpenCL ICD
 # --------------
 # Generic OpenCL installable client driver
 
@@ -574,7 +583,7 @@ then
     popd
 fi
 
-# 23. CLBlast
+# 24. CLBlast
 # -----------
 # OpenCL-based BLAS library
 
@@ -595,7 +604,7 @@ then
     popd
 fi
 
-# 24. GSL
+# 25. GSL
 # -------
 # GNU Scientific Library (used in UKRmol+ for special functions)
 
@@ -616,7 +625,7 @@ then
     popd
 fi
 
-# 25. UKRmol+
+# 26. UKRmol+
 # -----------
 # Molecular R-matrix codes
 
@@ -680,7 +689,7 @@ then
     popd
 fi
 
-# 26. Finalize
+# 27. Finalize
 # ------------
 # Optimize binaries and add default library search paths
 
@@ -698,7 +707,7 @@ do
     patchelf --set-rpath $RELPATH $FILEPATH
 done
 
-# 27. Pack
+# 28. Pack
 # --------
 # Write a README and an env-script, and build the shell installer
 
