@@ -1,26 +1,27 @@
 # ---------------------------------------------------------------------------- #
-# Build UKRmol+ in MSYS2/MinGW64 on Windows                                    #
+# Build UKRmol+ in MSYS2/UCRT64 on Windows                                     #
 # ---------------------------------------------------------------------------- #
 # Necessary packages to install first:                                         #
 #                                                                              #
-#    mingw64/mingw-w64-x86_64-arpack                                           #
-#    mingw64/mingw-w64-x86_64-clblast                                          #
-#    mingw64/mingw-w64-x86_64-cmake                                            #
-#    mingw64/mingw-w64-x86_64-doxygen                                          #
-#    mingw64/mingw-w64-x86_64-fc                                               #
-#    mingw64/mingw-w64-x86_64-graphviz                                         #
-#    mingw64/mingw-w64-x86_64-msmpi                                            #
-#    mingw64/mingw-w64-x86_64-ninja                                            #
-#    mingw64/mingw-w64-x86_64-openblas                                         #
-#    mingw64/mingw-w64-x86_64-opencl-headers                                   #
-#    mingw64/mingw-w64-x86_64-scalapack                                        #
+#    ucrt64/mingw-w64-ucrt-x86_64-arpack                                       #
+#    ucrt64/mingw-w64-ucrt-x86_64-clblast                                      #
+#    ucrt64/mingw-w64-ucrt-x86_64-cmake                                        #
+#    ucrt64/mingw-w64-ucrt-x86_64-doxygen                                      #
+#    ucrt64/mingw-w64-ucrt-x86_64-fc                                           #
+#    ucrt64/mingw-w64-ucrt-x86_64-graphviz                                     #
+#    ucrt64/mingw-w64-ucrt-x86_64-gsl                                          #
+#    ucrt64/mingw-w64-ucrt-x86_64-msmpi                                        #
+#    ucrt64/mingw-w64-ucrt-x86_64-ninja                                        #
+#    ucrt64/mingw-w64-ucrt-x86_64-openblas                                     #
+#    ucrt64/mingw-w64-ucrt-x86_64-opencl-headers                               #
+#    ucrt64/mingw-w64-ucrt-x86_64-scalapack                                    #
 #                                                                              #
 # Requires installation of Microsoft MPI on the destination machine.           #
 # ---------------------------------------------------------------------------- #
 
 SRCDIR=/x/codes
-INSTDIR=/x/codes/ukrmolp-release-mingw64
-FLAGS="-fdefault-integer-8 -march=x86-64-v3"
+INSTDIR=/x/codes/ukrmolp-release-ucrt64
+FLAGS="-march=x86-64-v3"
 
 # ---------------------------------------------------------------------------- #
 # Build double precision with MSMPI                                            #
@@ -28,8 +29,8 @@ FLAGS="-fdefault-integer-8 -march=x86-64-v3"
 
 if [ ! -d $INSTDIR/bin.double ]
 then
-	mkdir -p $HOME/build-mingw64-double
-	pushd    $HOME/build-mingw64-double
+	mkdir -p $HOME/build-ucrt64-double
+	pushd    $HOME/build-ucrt64-double
 
 	cmake \
 		-G Ninja \
@@ -46,6 +47,7 @@ then
 		-D SCALAPACK_LIBRARIES="-lscalapack" \
 		-D UKRMOL_OUT_DIR=$SRCDIR/ukrmol-out \
 		-D WITH_CLBLAST=ON \
+		-D WITH_GSL=ON \
 		-D WITH_MPI=ON \
 		$SRCDIR/ukrmol-in || exit 1
 
@@ -61,8 +63,8 @@ fi
 
 if [ ! -d $INSTDIR/bin.quad ]
 then
-	mkdir -p $HOME/build-mingw64-quad
-	pushd    $HOME/build-mingw64-quad
+	mkdir -p $HOME/build-ucrt64-quad
+	pushd    $HOME/build-ucrt64-quad
 
 	cmake \
 		-G Ninja \
@@ -77,6 +79,7 @@ then
 		-D CLBLAST_LIBRARIES="-lclblast -lOpenCL" \
 		-D UKRMOL_OUT_DIR=$SRCDIR/ukrmol-out \
 		-D WITH_CLBLAST=ON \
+        -D WITH_GSL=ON \
 		-D WITH_MPI=OFF \
 		$SRCDIR/ukrmol-in || exit 1
 
@@ -97,14 +100,17 @@ for lib in \
 	libgcc_s_seh-1.dll \
 	libgfortran-5.dll \
 	libgomp-1.dll \
+	libgsl-28.dll \
+	libgslcblas-0.dll \
+	libmsmpifec.dll \
 	libopenblas.dll \
 	libquadmath-0.dll \
 	libscalapack.dll \
 	libstdc++-6.dll \
 	libwinpthread-1.dll
 do
-	cp -v /mingw64/bin/$lib $INSTDIR/bin.double/
-	cp -v /mingw64/bin/$lib $INSTDIR/bin.quad/
+	cp -v /ucrt64/bin/$lib $INSTDIR/bin.double/
+	cp -v /ucrt64/bin/$lib $INSTDIR/bin.quad/
 done
 
 echo "UKRmol+ Windows distribution
